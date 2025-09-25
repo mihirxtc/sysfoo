@@ -1,7 +1,16 @@
 pipeline {
-  agent any
+
+  agent none
+
   stages {
+
     stage('build') {
+      agent {
+        docker {
+          image 'maven:3.9.6-eclipse-temurin-17-alpine'
+        }
+      }
+
       steps {
         echo 'Build job for the sysfoo app'
         sh 'mvn compile'
@@ -9,6 +18,13 @@ pipeline {
     }
 
     stage('test') {
+
+      agent {
+        docker {
+          image 'maven:3.9.6-eclipse-temurin-17-alpine'
+        }
+      }
+      
       steps {
         echo 'Test job for the sysfoo app'
         sh 'mvn clean test'
@@ -16,6 +32,13 @@ pipeline {
     }
 
     stage('package') {
+
+      agent {
+        docker {
+          image 'maven:3.9.6-eclipse-temurin-17-alpine'
+        }
+      }
+
       steps {
         echo 'Package job for the sysfoo app'
         sh '''# Truncate the GIT_COMMIT to the first 7 characters
@@ -30,9 +53,11 @@ pipeline {
     }
 
   }
+
   tools {
     maven 'Maven 3.9.6'
   }
+
   post {
     success {
       echo 'The build, test, and package stages were successful.'
@@ -47,6 +72,7 @@ pipeline {
     }
 
   }
+  
   triggers {
     pollSCM('* * * * *')
   }
