@@ -1,7 +1,7 @@
 
 # Sysfoo Application
 
-A Devops Learning App 
+A Devops Learning App with Jenkins and GitHub truc enforcement
 
 ## About the Application
 
